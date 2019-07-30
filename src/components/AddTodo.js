@@ -1,9 +1,25 @@
 import React, {Component} from 'react';
 
 export class AddTodo extends Component {
+
+  state = {
+    title: '',
+  }
+
+  onSubmit = (e) => {
+    e.preventDefault();
+    this.props.addTodo(this.state.title);
+    this.setState({ title: '' });
+  }
+
+  onChange = (e) => {
+    this.setState({
+      [e.target.name]: e.target.value,
+    });
+  }
   render() {
     return (
-      <form>
+      <form onSubmit={this.onSubmit}>
         <div className="form-row mt-3">
           <div className="col-10">
             <input
@@ -11,6 +27,8 @@ export class AddTodo extends Component {
               name="title"
               placeholder="Add Todo..."
               className="form-control"
+              value={this.state.title}
+              onChange={this.onChange}
             />
           </div>
           <div className="col-2">
