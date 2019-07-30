@@ -1,7 +1,10 @@
 import React, {Component} from 'react';
+import { BrowserRouter as Router, Route } from 'react-router-dom';
 import Todos from './components/Todos';
 import Header from './components/layout/Header';
+import Footer from './components/layout/Footer';
 import AddTodo from './components/AddTodo';
+import About from './components/pages/About';
 
 class App extends Component{
   state = {
@@ -53,13 +56,19 @@ class App extends Component{
 
   render() {
     return (
-      <div>
+      <Router>
         <Header />
         <div className="container">
-          <AddTodo addTodo={this.addTodo} />
-          <Todos todos={this.state.todos} markComplete={this.markComplete} delTodo={this.delTodo} />
+          <Route exact path="/" render={props => (
+            <React.Fragment>
+              <AddTodo addTodo={this.addTodo} />
+              <Todos todos={this.state.todos} markComplete={this.markComplete} delTodo={this.delTodo} />
+            </React.Fragment>
+          )} />
+          <Route path="/about" component={About} />
         </div>
-      </div>
+        <Footer />
+      </Router>
     );
   }
 }
